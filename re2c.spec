@@ -1,6 +1,6 @@
 Summary:	A tool for generating C-based recognizers from regular expressions
 Name:		re2c
-Version:	0.11.3
+Version:	0.12.0
 Release:	%mkrel 1
 License:	Public Domain
 Group:		Development/Tools
