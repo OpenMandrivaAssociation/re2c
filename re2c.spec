@@ -3,7 +3,7 @@ Name:		re2c
 Version:	0.13.0
 Release:	%mkrel 1
 License:	Public Domain
-Group:		Development/Tools
+Group:		Development/Other
 URL:		http://re2c.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/re2c/re2c-%{version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
