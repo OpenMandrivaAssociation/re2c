@@ -6,6 +6,7 @@ License:	Public Domain
 Group:		Development/Other
 URL:		http://re2c.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/re2c/re2c-%{version}.tar.gz
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 re2c is a great tool for writing fast and flexible lexers. It has served many
