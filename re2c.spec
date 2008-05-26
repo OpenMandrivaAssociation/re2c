@@ -1,12 +1,12 @@
 Summary:	A tool for generating C-based recognizers from regular expressions
 Name:		re2c
-Version:	0.13.2
+Version:	0.13.5
 Release:	%mkrel 1
 License:	Public Domain
 Group:		Development/Other
 URL:		http://re2c.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/re2c/re2c-%{version}.tar.gz
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 re2c is a great tool for writing fast and flexible lexers. It has served many
@@ -47,12 +47,12 @@ rm -f re2c scanner.o
 make check
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 %makeinstall_std
 
 %clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
