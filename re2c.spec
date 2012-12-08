@@ -49,7 +49,6 @@ make check
 %makeinstall_std
 
 %files
-%defattr(-,root,root)
 %doc doc/* examples CHANGELOG README lessons
 %attr(0755,root,root) %{_bindir}/re2c
 %{_mandir}/man1/re2c.1*
