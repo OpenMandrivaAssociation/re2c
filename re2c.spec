@@ -1,11 +1,11 @@
 Summary:	A tool for generating C-based recognizers from regular expressions
 Name:		re2c
-Version:	0.13.5
-Release:	12
+Version:	0.13.6
+Release:	1
 License:	Public Domain
 Group:		Development/Other
 URL:		http://re2c.sourceforge.net/
-Source0:	http://prdownloads.sourceforge.net/re2c/re2c-%{version}.tar.gz
+Source0:	http://sourceforge.net/projects/re2c/files/re2c/0.13.6/%{name}-%{version}.tar.gz
 
 %description
 re2c is a great tool for writing fast and flexible lexers. It has served many
@@ -52,3 +52,4 @@ make check
 %doc doc/* examples CHANGELOG README lessons
 %attr(0755,root,root) %{_bindir}/re2c
 %{_mandir}/man1/re2c.1*
+

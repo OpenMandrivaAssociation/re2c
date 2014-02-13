@@ -1,2 +1,4 @@
+removed_sources:
+  re2c-0.13.5.tar.gz: 3d334efab53a4a051a2b189b49a849e13523b6c0
 sources:
-  "re2c-0.13.5.tar.gz": 3d334efab53a4a051a2b189b49a849e13523b6c0
+  re2c-0.13.6.tar.gz: b272048550db56aea2ec1a0a1bce759b90b778fa
