@@ -4,7 +4,7 @@ Version:	0.13.6
 Release:	1
 License:	Public Domain
 Group:		Development/Other
-URL:		http://re2c.sourceforge.net/
+Url:		http://re2c.sourceforge.net/
 Source0:	http://sourceforge.net/projects/re2c/files/re2c/0.13.6/%{name}-%{version}.tar.gz
 
 %description
@@ -14,7 +14,6 @@ is on the order of 2-3 times faster than a flex based scanner, and its input
 model is much more flexible.
 
 %prep
-
 %setup -q
 
 for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type f -name .#\*`; do
@@ -31,7 +30,6 @@ find test -type f -exec chmod 644 {} \;
 rm -rf lessons/001_upn_calculator/windows
 
 %build
-
 %configure2_5x
 
 %make
