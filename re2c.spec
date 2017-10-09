@@ -1,11 +1,11 @@
 Summary:	A tool for generating C-based recognizers from regular expressions
 Name:		re2c
-Version:	0.13.7.5
-Release:	4
+Version:	1.0.2
+Release:	1
 License:	Public Domain
 Group:		Development/Other
-Url:		http://re2c.sourceforge.net/
-Source0:	http://sourceforge.net/projects/re2c/files/re2c/0.13.7.5/%{name}-%{version}.tar.gz
+Url:		http://re2c.org/
+Source0:	https://github.com/skvadrik/re2c/releases/download/%{version}/re2c-%{version}.tar.gz
 
 %description
 re2c is a great tool for writing fast and flexible lexers. It has served many
@@ -20,14 +20,13 @@ for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type 
     if [ -e "$i" ]; then rm -rf $i; fi >&/dev/null
 done
 
+find doc -type d |xargs chmod 0755
+find doc -type f |xargs chmod 0644
+
 # fix attribs
-chmod 644 doc/* examples/*.c examples/*.re examples/rexx/* CHANGELOG README
+chmod 644 examples/*.c examples/*.re CHANGELOG README
 
-find lessons -type f -exec chmod 644 {} \;
 find test -type f -exec chmod 644 {} \;
-
-# don't ship windows code
-rm -rf lessons/001_upn_calculator/windows
 
 %build
 %configure2_5x
@@ -36,7 +35,9 @@ rm -rf lessons/001_upn_calculator/windows
 
 #regenerate file scanner.cc
 rm -f scanner.cc
-./re2c scanner.re > scanner.cc
+cd test
+../re2c scanner.re > ../scanner.cc
+cd ..
 rm -f re2c scanner.o
 %make
 
@@ -47,6 +48,6 @@ make check
 %makeinstall_std
 
 %files
-%doc doc/* examples CHANGELOG README lessons
+%doc doc/* examples CHANGELOG README
 %attr(0755,root,root) %{_bindir}/re2c
 %{_mandir}/man1/re2c.1*
