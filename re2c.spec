@@ -1,11 +1,11 @@
 Summary:	A tool for generating C-based recognizers from regular expressions
 Name:		re2c
-Version:	1.1
+Version:	1.1.1
 Release:	1
 License:	Public Domain
 Group:		Development/Other
 Url:		http://re2c.org/
-Source0:	https://github.com/skvadrik/re2c/releases/download/%{version}/re2c-%{version}.tar.gz
+Source0:	https://github.com/skvadrik/re2c/releases/download/%{version}/%{name}-%{version}.tar.gz
 
 %description
 re2c is a great tool for writing fast and flexible lexers. It has served many
