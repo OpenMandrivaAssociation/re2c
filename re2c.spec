@@ -14,7 +14,7 @@ is on the order of 2-3 times faster than a flex based scanner, and its input
 model is much more flexible.
 
 %prep
-%setup -q
+%autosetup -p1
 
 for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type f -name .#\*`; do
     if [ -e "$i" ]; then rm -rf $i; fi >&/dev/null
@@ -29,9 +29,9 @@ chmod 644 examples/*.c examples/*.re CHANGELOG README
 find test -type f -exec chmod 644 {} \;
 
 %build
-%configure2_5x
+%configure
 
-%make
+%make_build
 
 #regenerate file scanner.cc
 rm -f scanner.cc
@@ -39,13 +39,13 @@ cd test
 ../re2c scanner.re > ../scanner.cc
 cd ..
 rm -f re2c scanner.o
-%make
+%make_build
 
 %check
 make check
 
 %install
-%makeinstall_std
+%make_install
 
 %files
 %doc doc/* examples CHANGELOG README
