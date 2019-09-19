@@ -1,11 +1,11 @@
 Summary:	A tool for generating C-based recognizers from regular expressions
 Name:		re2c
-Version:	1.1.1
-Release:	2
+Version:	1.2.1
+Release:	1
 License:	Public Domain
 Group:		Development/Other
 Url:		http://re2c.org/
-Source0:	https://github.com/skvadrik/re2c/releases/download/%{version}/%{name}-%{version}.tar.gz
+Source0:	https://github.com/skvadrik/re2c/archive/%{version}.tar.gz
 
 %description
 re2c is a great tool for writing fast and flexible lexers. It has served many
@@ -24,11 +24,12 @@ find doc -type d |xargs chmod 0755
 find doc -type f |xargs chmod 0644
 
 # fix attribs
-chmod 644 examples/*.c examples/*.re CHANGELOG README
+chmod 644 examples/*.c examples/*.re CHANGELOG
 
 find test -type f -exec chmod 644 {} \;
 
 %build
+./autogen.sh
 %configure
 
 %make_build
@@ -48,6 +49,7 @@ make check
 %make_install
 
 %files
-%doc doc/* examples CHANGELOG README
+%doc doc/* examples CHANGELOG
 %attr(0755,root,root) %{_bindir}/re2c
 %{_mandir}/man1/re2c.1*
+%{_datadir}/re2c/stdlib/unicode_categories.re
