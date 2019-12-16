@@ -1,6 +1,6 @@
 Summary:	A tool for generating C-based recognizers from regular expressions
 Name:		re2c
-Version:	1.2.1
+Version:	1.3
 Release:	1
 License:	Public Domain
 Group:		Development/Other
@@ -32,14 +32,6 @@ find test -type f -exec chmod 644 {} \;
 ./autogen.sh
 %configure
 
-%make_build
-
-#regenerate file scanner.cc
-rm -f scanner.cc
-cd test
-../re2c scanner.re > ../scanner.cc
-cd ..
-rm -f re2c scanner.o
 %make_build
 
 %check
