@@ -9,7 +9,8 @@ License:	Public Domain
 Group:		Development/Other
 Url:		http://re2c.org/
 Source0:	https://github.com/skvadrik/re2c/archive/%{version}.tar.gz
-
+BuildRequires:	bison
+BuildRequires:	valgrind
 %description
 re2c is a great tool for writing fast and flexible lexers. It has served many
 people well for many years and it deserves to be maintained more actively. re2c
@@ -43,7 +44,8 @@ LDFLAGS="%{ldflags} -fprofile-instr-generate" \
 %configure
 %make_build
 
-make check
+make check || cat test-suite.log && exit 1
+
 unset LD_LIBRARY_PATH
 unset LLVM_PROFILE_FILE
 llvm-profdata merge --output=%{name}.profile *.profile.d
@@ -59,7 +61,7 @@ LDFLAGS="%{ldflags} -fprofile-instr-use=$(realpath %{name}.profile)" \
 %make_build
 
 %check
-make check
+make check || cat test-suite.log && exit 1
 
 %install
 %make_install
