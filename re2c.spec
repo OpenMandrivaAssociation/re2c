@@ -40,7 +40,7 @@ export LD_LIBRARY_PATH="$(pwd)"
 CFLAGS="%{optflags} -fprofile-instr-generate" \
 CXXFLAGS="%{optflags} -fprofile-instr-generate" \
 LDFLAGS="%{ldflags} -fprofile-instr-generate" \
-%configure \
+%configure
 %make_build
 
 make check
