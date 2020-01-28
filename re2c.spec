@@ -1,7 +1,10 @@
+%bcond_without pgo
+%global optflags %{optflags} -O3
+
 Summary:	A tool for generating C-based recognizers from regular expressions
 Name:		re2c
 Version:	1.3
-Release:	1
+Release:	2
 License:	Public Domain
 Group:		Development/Other
 Url:		http://re2c.org/
@@ -16,7 +19,7 @@ model is much more flexible.
 %prep
 %autosetup -p1
 
-for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type f -name .#\*`; do
+for i in $(find . -type d -name CVS) $(find . -type f -name .cvs\*) $(find . -type f -name .#\*); do
     if [ -e "$i" ]; then rm -rf $i; fi >&/dev/null
 done
 
@@ -30,8 +33,29 @@ find test -type f -exec chmod 644 {} \;
 
 %build
 ./autogen.sh
-%configure
 
+%if %{with pgo}
+export LLVM_PROFILE_FILE=%{name}-%p.profile.d
+export LD_LIBRARY_PATH="$(pwd)"
+CFLAGS="%{optflags} -fprofile-instr-generate" \
+CXXFLAGS="%{optflags} -fprofile-instr-generate" \
+LDFLAGS="%{ldflags} -fprofile-instr-generate" \
+%configure \
+%make_build
+
+make check
+unset LD_LIBRARY_PATH
+unset LLVM_PROFILE_FILE
+llvm-profdata merge --output=%{name}.profile *.profile.d
+rm -f *.profile.d
+
+make clean
+
+CFLAGS="%{optflags} -fprofile-instr-use=$(realpath %{name}.profile)" \
+CXXFLAGS="%{optflags} -fprofile-instr-use=$(realpath %{name}.profile)" \
+LDFLAGS="%{ldflags} -fprofile-instr-use=$(realpath %{name}.profile)" \
+%endif
+%configure
 %make_build
 
 %check
