@@ -10,7 +10,8 @@ Group:		Development/Other
 Url:		http://re2c.org/
 Source0:	https://github.com/skvadrik/re2c/archive/%{version}.tar.gz
 BuildRequires:	bison
-BuildRequires:	valgrind
+BuildRequires:	bash
+
 %description
 re2c is a great tool for writing fast and flexible lexers. It has served many
 people well for many years and it deserves to be maintained more actively. re2c
@@ -43,7 +44,8 @@ CXXFLAGS="%{optflags} -fprofile-instr-generate" \
 LDFLAGS="%{ldflags} -fprofile-instr-generate" \
 %configure
 %make_build
-
+# (tpg) try to fix tests
+sed -i -e 's#re2c=.*$#re2c="$(dirname $0)/re2c"#g' run_tests.sh
 make check || cat test-suite.log && exit 1
 
 unset LD_LIBRARY_PATH
