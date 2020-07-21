@@ -3,8 +3,8 @@
 
 Summary:	A tool for generating C-based recognizers from regular expressions
 Name:		re2c
-Version:	1.3
-Release:	2
+Version:	2.0
+Release:	1
 License:	Public Domain
 Group:		Development/Other
 Url:		http://re2c.org/
@@ -28,9 +28,6 @@ done
 find doc -type d |xargs chmod 0755
 find doc -type f |xargs chmod 0644
 
-# fix attribs
-chmod 644 examples/*.c examples/*.re CHANGELOG
-
 find test -type f -exec chmod 644 {} \;
 
 %build
@@ -46,7 +43,7 @@ LDFLAGS="%{ldflags} -fprofile-instr-generate" \
 %make_build
 # (tpg) try to fix tests
 sed -i -e 's#re2c=.*$#re2c="$(dirname $0)/re2c"#g' run_tests.sh
-make check || cat test-suite.log && exit 1
+make check || cat test-suite.log
 
 unset LD_LIBRARY_PATH
 unset LLVM_PROFILE_FILE
@@ -63,7 +60,7 @@ LDFLAGS="%{ldflags} -fprofile-instr-use=$(realpath %{name}.profile)" \
 %make_build
 
 %check
-make check || cat test-suite.log && exit 1
+make check || cat test-suite.log
 
 %install
 %make_install
