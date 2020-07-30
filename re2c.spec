@@ -3,7 +3,7 @@
 
 Summary:	A tool for generating C-based recognizers from regular expressions
 Name:		re2c
-Version:	2.0
+Version:	2.0.1
 Release:	1
 License:	Public Domain
 Group:		Development/Other
