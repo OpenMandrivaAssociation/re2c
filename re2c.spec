@@ -3,7 +3,7 @@
 
 Summary:	A tool for generating C-based recognizers from regular expressions
 Name:		re2c
-Version:	2.1.1
+Version:	2.2
 Release:	1
 License:	Public Domain
 Group:		Development/Other
@@ -48,8 +48,6 @@ CXXFLAGS="%{optflags} -fprofile-instr-generate" \
 LDFLAGS="%{ldflags} -fprofile-instr-generate" \
 %configure
 %make_build
-# (tpg) try to fix tests
-sed -i -e 's#re2c=.*$#re2c="$(dirname $0)/re2c"#g' run_tests.sh
 make check || cat test-suite.log
 
 unset LD_LIBRARY_PATH
