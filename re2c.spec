@@ -4,8 +4,8 @@
 
 Summary:	A tool for generating C-based recognizers from regular expressions
 Name:		re2c
-Version:	2.2
-Release:	2
+Version:	3.0
+Release:	1
 License:	Public Domain
 Group:		Development/Other
 Url:		http://re2c.org/
@@ -25,6 +25,13 @@ BuildRequires:	golang
 
 %description re2go
 A tool for generating Go-based recognizers from regular expressions
+
+%package re2rust
+Summary:	A tool for generating Rust-based recognizers from regular expressions
+BuildRequires:	rust
+
+%description re2rust
+A tool for generating Rust-based recognizers from regular expressions
 
 %prep
 %autosetup -p1
@@ -80,3 +87,7 @@ make check || cat test-suite.log
 %files re2go
 %{_bindir}/re2go
 %{_mandir}/man1/re2go.1*
+
+%files re2rust
+%{_bindir}/re2rust
+%{_mandir}/man1/re2rust.1*
