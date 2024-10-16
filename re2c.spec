@@ -8,7 +8,7 @@ Version:	3.1
 Release:	1
 License:	Public Domain
 Group:		Development/Other
-Url:		http://re2c.org/
+Url:		https://re2c.org/
 Source0:	https://github.com/skvadrik/re2c/archive/%{version}.tar.gz
 BuildRequires:	bison
 BuildRequires:	bash
