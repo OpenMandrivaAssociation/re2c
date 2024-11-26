@@ -4,7 +4,7 @@
 
 Summary:	A tool for generating C-based recognizers from regular expressions
 Name:		re2c
-Version:	3.1
+Version:	4.0.1
 Release:	1
 License:	Public Domain
 Group:		Development/Other
@@ -18,20 +18,6 @@ re2c is a great tool for writing fast and flexible lexers. It has served many
 people well for many years and it deserves to be maintained more actively. re2c
 is on the order of 2-3 times faster than a flex based scanner, and its input
 model is much more flexible.
-
-%package re2go
-Summary:	A tool for generating Go-based recognizers from regular expressions
-BuildRequires:	golang
-
-%description re2go
-A tool for generating Go-based recognizers from regular expressions
-
-%package re2rust
-Summary:	A tool for generating Rust-based recognizers from regular expressions
-BuildRequires:	rust
-
-%description re2rust
-A tool for generating Rust-based recognizers from regular expressions
 
 %prep
 %autosetup -p1
@@ -54,7 +40,8 @@ export LD_LIBRARY_PATH="$(pwd)"
 CFLAGS="%{optflags} -fprofile-generate" \
 CXXFLAGS="%{optflags} -fprofile-generate" \
 LDFLAGS="%{build_ldflags} -fprofile-generate" \
-%configure
+%configure \
+	--enable-libs
 %make_build
 make check || cat test-suite.log
 
@@ -69,7 +56,8 @@ CFLAGS="%{optflags} -fprofile-use=$PROFDATA" \
 CXXFLAGS="%{optflags} -fprofile-use=$PROFDATA" \
 LDFLAGS="%{build_ldflags} -fprofile-use=$PROFDATA" \
 %endif
-%configure
+%configure \
+	--enable-libs
 %make_build
 
 %check
@@ -78,16 +66,39 @@ make check || cat test-suite.log
 %install
 %make_install
 
+%libpackages
+
+P='%%'
+for language in d go haskell java js ocaml python rust v zig; do
+	case $language in
+	haskell)
+		lng=hs
+		;;
+	python)
+		lng=py
+		;;
+	*)
+		lng=$language
+		;;
+	esac
+	cat >%{specpartsdir}/$language.specpart <<EOF
+${P}package re2$lng
+Summary:	A tool for generating $language-based recognizers from regular expressions
+
+${P}description re2$lng
+A tool for generating $language-based recognizers from regular expressions
+
+${P}files re2$lng
+%{_bindir}/re2$lng
+%{_mandir}/man1/re2$lng.1*
+%{_datadir}/re2c/stdlib/$language
+EOF
+done
+
 %files
 %doc doc/* examples CHANGELOG
 %attr(0755,root,root) %{_bindir}/re2c
 %{_mandir}/man1/re2c.1*
+%dir %{_datadir}/re2c/stdlib
+%{_datadir}/re2c/stdlib/c
 %{_datadir}/re2c/stdlib/unicode_categories.re
-
-%files re2go
-%{_bindir}/re2go
-%{_mandir}/man1/re2go.1*
-
-%files re2rust
-%{_bindir}/re2rust
-%{_mandir}/man1/re2rust.1*
