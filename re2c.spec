@@ -42,7 +42,8 @@ CFLAGS="%{optflags} -fprofile-generate" \
 CXXFLAGS="%{optflags} -fprofile-generate" \
 LDFLAGS="%{build_ldflags} -fprofile-generate" \
 %configure \
-	--enable-libs
+	--enable-libs \
+	--enable-java
 %make_build
 make check || cat test-suite.log
 
@@ -58,7 +59,8 @@ CXXFLAGS="%{optflags} -fprofile-use=$PROFDATA" \
 LDFLAGS="%{build_ldflags} -fprofile-use=$PROFDATA" \
 %endif
 %configure \
-	--enable-libs
+	--enable-libs \
+	--enable-java
 %make_build
 
 %check
