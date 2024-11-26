@@ -13,6 +13,7 @@ Source0:	https://github.com/skvadrik/re2c/archive/%{version}.tar.gz
 BuildRequires:	bison
 BuildRequires:	bash
 BuildRequires:	pkgconfig(re2)
+BuildRequires:	jdk-current
 
 %description
 re2c is a great tool for writing fast and flexible lexers. It has served many
