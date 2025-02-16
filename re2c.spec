@@ -4,7 +4,7 @@
 
 Summary:	A tool for generating C-based recognizers from regular expressions
 Name:		re2c
-Version:	4.0.2
+Version:	4.1
 Release:	1
 License:	Public Domain
 Group:		Development/Other
