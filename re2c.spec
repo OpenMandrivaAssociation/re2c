@@ -10,6 +10,11 @@ License:	Public Domain
 Group:		Development/Other
 Url:		https://re2c.org/
 Source0:	https://github.com/skvadrik/re2c/archive/%{version}.tar.gz
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	bison
 BuildRequires:	bash
 BuildRequires:	pkgconfig(re2)
