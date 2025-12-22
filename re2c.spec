@@ -4,7 +4,7 @@
 
 Summary:	A tool for generating C-based recognizers from regular expressions
 Name:		re2c
-Version:	4.1
+Version:	4.4
 Release:	1
 License:	Public Domain
 Group:		Development/Other
@@ -78,7 +78,7 @@ make check || cat test-suite.log
 %libpackages
 
 P='%%'
-for language in d go haskell java js ocaml python rust v zig; do
+for language in d go haskell java js ocaml python rust swift v zig; do
 	case $language in
 	haskell)
 		lng=hs
