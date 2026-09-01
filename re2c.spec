@@ -1,22 +1,23 @@
 %global optflags %{optflags} -O3
-
-%bcond_without pgo
+# PGO with re2c 4.6 and Clang 23: larger binaries, no meaningful speedup
+# (and a regression on combined Unicode-identifier DFAs). Do not retry
+# until the next major compiler update.
 
 Summary:	A tool for generating C-based recognizers from regular expressions
 Name:		re2c
-Version:	4.5.1
+Version:	4.6
 Release:	1
 License:	Public Domain
 Group:		Development/Other
 Url:		https://re2c.org/
-Source0:	https://github.com/skvadrik/re2c/archive/%{version}.tar.gz
-BuildRequires:	autoconf
-BuildRequires:	automake
-BuildRequires:	libtool-base
+Source0:	https://github.com/skvadrik/re2c/releases/download/%{version}/%{name}-%{version}.tar.xz
+BuildSystem:	autotools
+BuildOption:	--enable-libs
+BuildOption:	--enable-java
 BuildRequires:	slibtool
 BuildRequires:	make
-BuildRequires:	bison
 BuildRequires:	bash
+BuildRequires:	python
 BuildRequires:	pkgconfig(re2)
 BuildRequires:	jdk-current
 
@@ -26,11 +27,9 @@ people well for many years and it deserves to be maintained more actively. re2c
 is on the order of 2-3 times faster than a flex based scanner, and its input
 model is much more flexible.
 
-%prep
-%autosetup -p1
-
+%prep -a
 for i in $(find . -type d -name CVS) $(find . -type f -name .cvs\*) $(find . -type f -name .#\*); do
-    if [ -e "$i" ]; then rm -rf $i; fi >&/dev/null
+	if [ -e "$i" ]; then rm -rf $i; fi >&/dev/null
 done
 
 find doc -type d |xargs chmod 0755
@@ -38,43 +37,10 @@ find doc -type f |xargs chmod 0644
 
 find test -type f -exec chmod 644 {} \;
 
-%build
-./autogen.sh
-
-%if %{with pgo}
-export LD_LIBRARY_PATH="$(pwd)"
-
-CFLAGS="%{optflags} -fprofile-generate" \
-CXXFLAGS="%{optflags} -fprofile-generate" \
-LDFLAGS="%{build_ldflags} -fprofile-generate" \
-%configure \
-	--enable-libs \
-	--enable-java
-%make_build
-make check || cat test-suite.log
-
-unset LD_LIBRARY_PATH
-llvm-profdata merge --output=%{name}-llvm.profdata $(find . -name "*.profraw" -type f)
-PROFDATA="$(realpath %{name}-llvm.profdata)"
-rm -f *.profraw
-
-make clean
-
-CFLAGS="%{optflags} -fprofile-use=$PROFDATA" \
-CXXFLAGS="%{optflags} -fprofile-use=$PROFDATA" \
-LDFLAGS="%{build_ldflags} -fprofile-use=$PROFDATA" \
-%endif
-%configure \
-	--enable-libs \
-	--enable-java
-%make_build
-
 %check
-make check || cat test-suite.log
+make -C _OMV_rpm_build check || cat _OMV_rpm_build/test-suite.log
 
-%install
-%make_install
-
+%install -a
 %libpackages
 
 P='%%'
@@ -111,3 +77,5 @@ done
 %dir %{_datadir}/re2c/stdlib
 %{_datadir}/re2c/stdlib/c
 %{_datadir}/re2c/stdlib/unicode_categories.re
+%{_datadir}/re2c/stdlib/unicode_blocks.re
+%{_datadir}/re2c/stdlib/unicode_properties.re
